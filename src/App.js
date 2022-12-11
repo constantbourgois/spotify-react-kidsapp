@@ -25,12 +25,24 @@ function App(props) {
     setLoading(false);
   }, [])
 
+  const callBackendAPI = useCallback(async () => {
+    const response = await fetch('/express_backend');
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(body.message) 
+    }
+    console.log(body);
+    return body;
+  }, []);
+
   // the useEffect is only there to call `fetchData` at the right time
   useEffect(() => {
     fetchData()
       // make sure to catch any error
-      .catch(console.error);;
-  }, [fetchData])
+      .catch(console.error);
+      callBackendAPI();
+  }, [fetchData, callBackendAPI])
 
   const openPlayer = mood => {
     setShowPlayer(true);
@@ -43,6 +55,8 @@ function App(props) {
 
     })()
   };
+
+
 
   if (isLoading) {
     return (<div className="App-header"><svg xmlns="http://www.w3.org/2000/svg" width="57" height="57" viewBox="0 0 57 57" stroke="#fff">

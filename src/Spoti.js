@@ -2,7 +2,7 @@ import { Buffer } from 'buffer';
 
 export async function getToken() {
     const client_id = 'b75ef8547d5a48debd9d8ac5a0a34b33';
-    const client_secret = 'c9f7504bb4be4c0185804797c21d7400'
+    const client_secret = 'c9f7504bb4be4c0185804797c21d7400';
     const Token = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         body: 'grant_type=client_credentials',

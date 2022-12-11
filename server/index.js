@@ -1,15 +1,12 @@
 require('dotenv').config()
-console.log(process.env) // remove this after you've confirmed it is working
+const express = require('express'); //Line 1
+const app = express(); //Line 2
+const port = process.env.PORT || 5000; //Line 3
 
-const path = require('path');
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3001;
-const publicPath = path.join(__dirname, '..', 'build');
-app.use(express.static(publicPath));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
-});
-app.listen(port, () => {
-  console.log(`Server is up on port ${port}!`);
-});
+// This displays message that the server running and listening to specified port
+app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6
+
+// create a GET route
+app.get('/express_backend', (req, res) => { //Line 9
+  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' }); //Line 10
+}); //Line 11
