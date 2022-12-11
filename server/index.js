@@ -4,7 +4,7 @@ const app = express(); //Line 2
 const port = process.env.PORT || 5000; //Line 3
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('build'));
 }
 
 const envir = process.env.NODE_ENV;
