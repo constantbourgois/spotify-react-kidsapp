@@ -1,8 +1,8 @@
 import { Buffer } from 'buffer';
 
 export async function getToken() {
-    const client_id = 'b75ef8547d5a48debd9d8ac5a0a34b33';
-    const client_secret = 'c9f7504bb4be4c0185804797c21d7400';
+    const client_id = process.env.SPOTIFY_CLIENT_ID;
+    const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
     const Token = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         body: 'grant_type=client_credentials',
@@ -43,16 +43,16 @@ function getRandomSearch() {
     return randomSearch;
 }
 
-export async function fetchTracks() {
+export async function fetchTracks(token) {
 
 
-    const token = await getToken();
+    //const token = await getToken();
     //const randomOffset = Math.floor(Math.random() * 1000);
     const randomOffset = 0;
     const q = getRandomSearch();
 
     var myHeaders = new Headers();
-
+    console.log(token);
     myHeaders.append("Authorization", `Bearer ${token}`);
 
     var requestOptions = {
@@ -60,6 +60,7 @@ export async function fetchTracks() {
         headers: myHeaders,
         //redirect: 'follow'
     };
+
 
 
     const Songs = await (await fetch(`https://api.spotify.com/v1/search?q=${q}&offset=${randomOffset}&limit=50&type=track`, requestOptions)).json();
