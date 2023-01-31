@@ -1,3 +1,4 @@
+/*
 //set up the server
 require('dotenv').config();
 const express = require('express'); //Line 1
@@ -39,9 +40,10 @@ function getToken() {
 }
 
 ( async () => {
-  const t = await getToken();
+  //const t = await getToken();
   // create a GET route
-  await app.get('/backend', (req, res) => { 
+  await app.get('/moods', (req, res) => { 
+    await getToken;
     res.send({ token: `${t}` }); 
   }); 
 })()

@@ -2,12 +2,12 @@ import "./App.scss";
 
 import { useState } from "react";
 import { useEffect } from "react";
-import { useCallback } from "react";
 
 import Player from "./Player";
 import Moods from "./Moods";
 import { fetchTracks } from "./Spoti";
 import { getTrack } from "./Spoti";
+import { getToken } from "./Spoti";
 import loadingIcon from "./loading-icon.svg";
 
 function App(props) {
@@ -31,8 +31,9 @@ function App(props) {
   */
   useEffect(() => {
     (async () => {
+      /*
       //get tocken from server
-      const response = await fetch("/backend");
+      const response = await fetch("/moods");
       const body = await response.json();
 
       if (response.status !== 200) {
@@ -40,8 +41,11 @@ function App(props) {
       }
       console.log(body);
       setFirstToken(body.token);
-     
-      const data = await fetchTracks(body.token);
+     */
+
+      const token = await getToken();
+      setFirstToken(token);
+      const data = await fetchTracks(token);
       console.log(data);
       setSongsArray(data);
       setLoading(false);
@@ -49,7 +53,7 @@ function App(props) {
       // fetch the tracks
       //firstFetchTracks();
 
-      return body;
+     
     })();
   }, []);
 
