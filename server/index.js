@@ -1,4 +1,3 @@
-/*
 //set up the server
 require('dotenv').config();
 const express = require('express'); //Line 1
@@ -12,8 +11,8 @@ if (process.env.NODE_ENV === 'production') {
 // prepare the first call to spotify api
 const axios = require('axios');
 
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
 
 const headers = {
   'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')),
@@ -40,10 +39,10 @@ function getToken() {
 }
 
 ( async () => {
-  //const t = await getToken();
+  const t = await getToken();
   // create a GET route
   await app.get('/moods', (req, res) => { 
-    await getToken;
+
     res.send({ token: `${t}` }); 
   }); 
 })()
