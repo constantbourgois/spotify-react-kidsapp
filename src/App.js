@@ -18,42 +18,16 @@ function App(props) {
   const [currentTrack, setCurrentTrack] = useState();
   const [firstPlay, setFirstPlay] = useState(true);
   const [firstToken, setFirstToken] = useState();
-/*
-  const firstFetchTracks = useEffect(() => {
-    (async () => {
-      
-    })();
-  }, [firstToken]);*/
-/*
-  const heyToto = ()=> {
-    console.log(firstToken);
-  }
-  */
+
   useEffect(() => {
     (async () => {
-      /*
-      //get tocken from server
-      const response = await fetch("/moods");
-      const body = await response.json();
-
-      if (response.status !== 200) {
-        throw Error(body.message);
-      }
-      console.log(body);
-      setFirstToken(body.token);
-     */
 
       const token = await getToken();
       setFirstToken(token);
       const data = await fetchTracks(token);
-      console.log(data);
       setSongsArray(data);
       setLoading(false);
 
-      // fetch the tracks
-      //firstFetchTracks();
-
-     
     })();
   }, []);
 
@@ -62,15 +36,12 @@ function App(props) {
     setMood(mood);
     (async () => {
       const t = await getTrack(SongsArray, mood);
+       console.log(t);
       const newAudioElem = new Audio(t); //get the audio
       setCurrentTrack(newAudioElem);
       newAudioElem.play(); //
     })();
   };
-  /*
-  useEffect(() => {
-    getTracks().catch(console.error);
-  }, [getTracks]);*/
 
   if (isLoading) {
     return (
