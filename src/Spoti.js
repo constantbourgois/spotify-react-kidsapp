@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL = "https://spotify-react-kidsapp-e9ca39c0274b.herokuapp.com/";
 
 // Get a Spotify token
 export async function getToken() {
