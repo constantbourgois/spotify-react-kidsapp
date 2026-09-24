@@ -124,8 +124,8 @@ export function usePlayback(target: string) {
     [refreshRemoteState],
   );
 
-  const playSongs = useCallback(
-    (uris: string[], startIndex = 0) => {
+  const play = useCallback(
+    (contextUri: string, songUri: string) => {
       // Must run synchronously inside the tap, or mobile browsers block autoplay.
       playerRef.current?.activateElement();
       if (!deviceId) {
@@ -134,12 +134,12 @@ export function usePlayback(target: string) {
       }
       return run(async () => {
         try {
-          await api.playSongs(deviceId, uris, startIndex);
+          await api.playInContext(deviceId, contextUri, songUri);
         } catch (e) {
           // A freshly created browser device can take a moment to be known by the API.
           if (!(isBrowser && e instanceof api.ApiError && e.status === 404)) throw e;
           await sleep(1000);
-          await api.playSongs(deviceId, uris, startIndex);
+          await api.playInContext(deviceId, contextUri, songUri);
         }
       });
     },
@@ -166,7 +166,7 @@ export function usePlayback(target: string) {
     if (deviceId) return run(() => api.skipPrevious(deviceId));
   }, [deviceId, run]);
 
-  return { ready: deviceId !== null, now, error, playSongs, togglePlay, next, previous };
+  return { ready: deviceId !== null, now, error, play, togglePlay, next, previous };
 }
 
 export type Playback = ReturnType<typeof usePlayback>;
