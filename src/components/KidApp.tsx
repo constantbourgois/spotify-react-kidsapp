@@ -5,6 +5,7 @@ import { LoggedOutError } from "../spotify/auth";
 import { usePlayback } from "../spotify/usePlayback";
 import { Cover } from "./Cover";
 import { LockIcon } from "./icons";
+import { Logo } from "./Logo";
 import { PlayerView } from "./PlayerView";
 import { SongGrid } from "./SongGrid";
 
@@ -51,6 +52,7 @@ export function KidApp({ playlist, target, onParent }: Props) {
   return (
     <div className="kid-app">
       <header className="kid-header">
+        <Logo size={44} />
         <h1>{view === "grid" ? "Choisis tes chansons !" : "J'écoute"}</h1>
         {view === "grid" && playing && queue.length > 0 && (
           <button className="now-chip" onClick={() => setView("player")}>

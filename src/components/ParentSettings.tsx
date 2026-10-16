@@ -5,6 +5,7 @@ import { logout } from "../spotify/auth";
 import { BROWSER_TARGET } from "../spotify/usePlayback";
 import type { Settings } from "../settings";
 import { Cover } from "./Cover";
+import { Logo } from "./Logo";
 
 type Props = {
   settings: Settings;
@@ -36,7 +37,10 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
     <div className="overlay overlay--scroll">
       <div className="settings">
         <header className="settings__header">
-          <h1>Espace parent</h1>
+          <h1>
+            <Logo size={40} />
+            Espace parent
+          </h1>
           {onClose && (
             <button className="primary-btn" onClick={onClose}>
               Retour à la musique
