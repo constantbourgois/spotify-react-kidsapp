@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { KidApp } from "./components/KidApp";
+import { Logo, Mascots } from "./components/Logo";
 import { ParentSettings } from "./components/ParentSettings";
 import { PinGate } from "./components/PinGate";
 import { useSettings } from "./settings";
@@ -37,7 +38,11 @@ export function App() {
   if (status === "loggedOut") {
     return (
       <div className="login">
-        <h1>Ma musique</h1>
+        <Mascots />
+        <h1 className="brand">
+          <Logo height={120} />
+          <span>musik</span>
+        </h1>
         <p>
           Espace parent : connecte ton compte Spotify une seule fois.
           <br />

@@ -1,0 +1,11 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "palomaplayer.vercel.app" }],
+      "destination": "https://txikimusik.vercel.app/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/index.html" }]
+}

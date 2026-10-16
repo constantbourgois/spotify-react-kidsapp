@@ -26,7 +26,7 @@ export class LoggedOutError extends Error {
 }
 
 function redirectUri(): string {
-  return `${window.location.origin}/`;
+  return import.meta.env.VITE_REDIRECT_URI || `${window.location.origin}/`;
 }
 
 export function loadTokens(): Tokens | null {
@@ -66,7 +66,7 @@ export async function completeLoginFromUrl(): Promise<void> {
   const error = url.searchParams.get("error");
   if (!code && !error) return;
 
-  window.history.replaceState(null, "", url.pathname);
+  window.history.replaceState(null, "", "/");
   const verifier = localStorage.getItem(VERIFIER_KEY);
   const expectedState = localStorage.getItem(STATE_KEY);
   localStorage.removeItem(VERIFIER_KEY);

@@ -125,10 +125,10 @@ export async function getPlaybackState(): Promise<NowPlaying | null> {
 
 const onDevice = (path: string, deviceId: string) => `${path}?device_id=${encodeURIComponent(deviceId)}`;
 
-export function playSongs(deviceId: string, uris: string[], startIndex = 0) {
+export function playInContext(deviceId: string, contextUri: string, songUri: string) {
   return request<void>(onDevice("/me/player/play", deviceId), {
     method: "PUT",
-    body: JSON.stringify({ uris, offset: { position: startIndex } }),
+    body: JSON.stringify({ context_uri: contextUri, offset: { uri: songUri } }),
   });
 }
 
