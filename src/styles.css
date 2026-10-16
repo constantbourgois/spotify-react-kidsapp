@@ -342,6 +342,7 @@ h2 {
 }
 
 .parent-btn {
+  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,20 +397,21 @@ h2 {
   }
 }
 
+/* Tuile : pochette plein cadre, cadre blanc, titre sur un bandeau blanc en bas */
 .tile {
   position: relative;
   min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px 10px 12px;
-  background: var(--paper);
-  color: var(--ink);
+  overflow: hidden;
+  padding: 0;
+  background: var(--mist);
+  border: 5px solid var(--paper);
   border-radius: var(--radius);
   text-align: left;
+  color: var(--ink);
   box-shadow: var(--shadow);
   transition:
     transform 0.15s cubic-bezier(0.3, 1.4, 0.5, 1),
+    border-color 0.15s,
     box-shadow 0.15s;
   animation: tile-in 0.4s cubic-bezier(0.3, 1.3, 0.5, 1) both;
 }
@@ -441,20 +443,37 @@ h2 {
   transform: scale(0.96);
 }
 
-.tile .cover {
-  flex: 1;
-  min-height: 0;
+.tile > .cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.tile__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 12px 10px;
+  background: var(--paper);
+  border-radius: 16px 16px 0 0;
 }
 
 .tile__name {
-  margin-top: 6px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(0.95rem, 2.2vw, 1.25rem);
-  white-space: nowrap;
+  font-size: clamp(0.95rem, 2.4vw, 1.3rem);
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tile__artist {
@@ -465,52 +484,53 @@ h2 {
   text-overflow: ellipsis;
 }
 
-.tile--selected {
-  background: var(--jaune-soft);
-  transform: scale(0.97);
+.tile--playing {
+  border-color: var(--txiki);
   box-shadow:
-    0 0 0 5px var(--txiki),
+    0 0 0 3px rgb(106 92 146 / 0.25),
     0 14px 30px rgb(106 92 146 / 0.3);
 }
 
-.tile__check {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  display: flex;
-  background: var(--txiki);
-  color: #fff;
-  border-radius: 50%;
-  padding: 6px;
-  box-shadow: 0 0 0 3px #fff;
-  animation: pop 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+.tile--playing .tile__caption {
+  background: var(--jaune-soft);
 }
 
-/* Numéro d'ordre : une goutte jaune, comme dans le logo */
-.tile__badge {
+/* Égaliseur de la chanson en cours : une goutte jaune, comme dans le logo */
+.eq {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  min-width: 44px;
-  height: 44px;
-  padding-inline: 8px;
+  top: 10px;
+  right: 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--jaune);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.4rem;
+  align-items: flex-end;
+  gap: 4px;
+  height: 40px;
+  padding: 8px 10px;
   border-radius: var(--drop);
+  background: var(--jaune);
   box-shadow: 0 0 0 3px #fff;
-  font-variant-numeric: tabular-nums;
-  animation: pop 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
 }
 
-@keyframes pop {
+.eq i {
+  width: 6px;
+  border-radius: 3px;
+  background: var(--ink);
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+
+.eq i:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.eq i:nth-child(3) {
+  animation-delay: -0.6s;
+}
+
+@keyframes eq {
   from {
-    transform: scale(0);
+    height: 20%;
+  }
+  to {
+    height: 100%;
   }
 }
 
@@ -551,56 +571,6 @@ h2 {
   font-variant-numeric: tabular-nums;
 }
 
-.play-bar {
-  display: flex;
-  gap: 12px;
-  visibility: hidden;
-  transform: translateY(20px);
-  opacity: 0;
-  transition:
-    transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1),
-    opacity 0.2s;
-}
-
-.play-bar--visible {
-  visibility: visible;
-  transform: none;
-  opacity: 1;
-}
-
-.clear-btn {
-  flex: none;
-  width: 72px;
-  border-radius: 999px;
-  background: var(--paper);
-  color: var(--ink-soft);
-  box-shadow: inset 0 0 0 2px var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.big-play {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 999px;
-  background: var(--txiki);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(1.25rem, 3.5vw, 1.9rem);
-  box-shadow: 0 12px 28px rgb(106 92 146 / 0.35);
-  transition: transform 0.08s;
-}
-
-.big-play:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
 /* Player screen */
 .player-screen {
   flex: 1;
@@ -611,7 +581,6 @@ h2 {
 }
 
 .back-btn {
-  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -644,6 +613,7 @@ h2 {
 .player-cover {
   width: min(42vh, 80vw);
   flex: none;
+  margin: 24px; /* place des anneaux de couleur, dessinés hors de la pochette */
   border-radius: 50%;
   border: 10px solid var(--paper);
   box-shadow:
@@ -671,6 +641,10 @@ h2 {
 .player-title {
   font-size: clamp(1.7rem, 4.5vw, 2.8rem);
   color: var(--txiki);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .player-artist {
@@ -951,6 +925,108 @@ h2 {
   border: 2px solid var(--line);
   background: var(--paper);
   color: var(--ink);
+}
+
+/* Petits écrans (téléphone en paysage, tablette courte) : repris de la mise en page de prod */
+@media (max-height: 520px) {
+  .kid-app {
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .kid-header {
+    min-height: 44px;
+  }
+
+  .kid-header .bunny {
+    width: 34px;
+    height: 34px;
+  }
+
+  .kid-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .back-btn {
+    padding: 6px 14px 6px 6px;
+    font-size: 1rem;
+  }
+
+  .grid-screen,
+  .player-screen {
+    gap: 8px;
+  }
+
+  .song-grid {
+    gap: 10px;
+  }
+
+  .tile {
+    border-width: 4px;
+  }
+
+  .tile__caption {
+    padding: 5px 10px 6px;
+  }
+
+  .tile__artist {
+    display: none;
+  }
+
+  .grid-footer .round-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .player-main {
+    gap: 40px;
+  }
+
+  .player-cover {
+    width: min(56vh, 34vw);
+  }
+
+  .player-info {
+    gap: 8px;
+  }
+
+  .player-title {
+    font-size: 1.4rem;
+  }
+
+  .player-artist {
+    font-size: 1rem;
+  }
+
+  .controls {
+    margin-top: 0;
+    gap: 16px;
+  }
+
+  .round-btn--big {
+    width: 64px;
+    height: 64px;
+  }
+
+  .round-btn--huge {
+    width: 92px;
+    height: 92px;
+  }
+
+  .queue {
+    display: none;
+  }
+}
+
+@media (orientation: portrait) and (max-height: 720px) {
+  .player-cover {
+    width: min(32vh, 66vw);
+  }
+
+  .round-btn--huge {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 /* Logo animé (components/Logo.tsx), repris du site Txiki : les lettres tombent une à une et rebondissent,
