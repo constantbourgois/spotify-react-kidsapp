@@ -1185,9 +1185,35 @@ h2 {
   }
 }
 
-@media (orientation: portrait) and (max-height: 720px) {
+/* Portrait : pochette plus petite pour laisser de l'air sous l'en-tête (anneaux de couleur compris) */
+@media (orientation: portrait) {
   .player-cover {
-    width: min(32vh, 66vw);
+    width: min(34vh, 70vw);
+  }
+}
+
+/* Portrait peu haut (iPhone dans Safari, petits téléphones) : tout le lecteur doit tenir sous l'en-tête */
+@media (orientation: portrait) and (max-height: 760px) {
+  .player-cover {
+    width: min(24vh, 60vw);
+    border-width: 8px;
+  }
+
+  .player-info {
+    gap: 8px;
+  }
+
+  .player-title {
+    font-size: 1.6rem;
+  }
+
+  .controls {
+    margin-top: 4px;
+  }
+
+  .round-btn--big {
+    width: 72px;
+    height: 72px;
   }
 
   .round-btn--huge {
