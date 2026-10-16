@@ -19,6 +19,7 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
   const [devices, setDevices] = useState<Device[] | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [pinDraft, setPinDraft] = useState("");
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     getMe().then(setMe, () => {});
@@ -30,6 +31,8 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
     getDevices().then(setDevices, () => setDevices([]));
   }, []);
   useEffect(refreshDevices, [refreshDevices]);
+
+  const shown = playlists?.filter((p) => normalize(p.name).includes(normalize(query))) ?? [];
 
   const otherDevices = devices?.filter((d) => d.name !== "txikimusik" && d.name !== "Ma musique") ?? [];
 
@@ -73,18 +76,41 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
           {loadError && <p className="warning">Impossible de charger les playlists.</p>}
           {!playlists && !loadError && <p>Chargement…</p>}
           {playlists && playlists.length === 0 && <p>Aucune playlist trouvée sur ce compte.</p>}
-          <div className="playlist-list">
-            {playlists?.map((p) => (
-              <button
-                key={p.id}
-                className={`playlist${settings.playlist?.id === p.id ? " playlist--selected" : ""}`}
-                onClick={() => onChange({ playlist: p })}
-              >
-                <Cover url={p.imageUrl} />
-                <span>{p.name}</span>
-              </button>
-            ))}
-          </div>
+          {settings.playlist && (
+            <div className="playlist-current">
+              <Cover url={settings.playlist.imageUrl} />
+              <span>
+                <small>Playlist choisie</small>
+                {settings.playlist.name}
+              </span>
+            </div>
+          )}
+          {playlists && playlists.length > 8 && (
+            <input
+              className="playlist-search"
+              type="search"
+              placeholder="Rechercher une playlist"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Rechercher une playlist"
+            />
+          )}
+          {playlists && playlists.length > 0 && (
+            <div className="playlist-list">
+              {shown.map((p) => (
+                <button
+                  key={p.id}
+                  className={`playlist${settings.playlist?.id === p.id ? " playlist--selected" : ""}`}
+                  aria-pressed={settings.playlist?.id === p.id}
+                  onClick={() => onChange({ playlist: p })}
+                >
+                  <Cover url={p.imageUrl} />
+                  <span>{p.name}</span>
+                </button>
+              ))}
+              {shown.length === 0 && <p className="hint">Aucune playlist ne correspond à « {query} ».</p>}
+            </div>
+          )}
         </section>
 
         <section>
@@ -164,4 +190,9 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
       </div>
     </div>
   );
+}
+
+/** Recherche insensible à la casse et aux accents (« comptine » trouve « Comptines à danser »). */
+function normalize(text: string): string {
+  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase().trim();
 }
