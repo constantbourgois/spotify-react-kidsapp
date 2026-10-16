@@ -719,12 +719,6 @@ h2 {
   padding: 16px;
 }
 
-.overlay--scroll {
-  align-items: flex-start;
-  overflow-y: auto;
-  user-select: text;
-}
-
 .pin-card {
   background: var(--paper);
   color: var(--ink);
@@ -793,104 +787,136 @@ h2 {
   background: none;
 }
 
+/* Espace parent : tient toujours dans un écran. Seules la liste des playlists (et, faute de place,
+   la colonne des réglages) défilent, jamais la page. */
 .settings {
   width: 100%;
-  max-width: 760px;
+  max-width: 1100px;
+  height: 100%;
   background: var(--paper);
   color: var(--ink);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 14px;
   box-shadow: var(--shadow);
+  overflow: hidden;
+  user-select: text;
 }
 
 .settings__header {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px 16px;
   align-items: center;
-  justify-content: space-between;
 }
 
 .settings__header h1 {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 2rem;
+  gap: 10px;
+  font-size: 1.7rem;
   color: var(--ink);
+}
+
+.settings__account {
+  flex: 1;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.settings__body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 24px;
 }
 
 .settings section {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 22px;
+  gap: 8px;
+  min-height: 0;
+}
+
+.settings__playlists {
+  min-height: 0;
+}
+
+.settings__side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.settings__side section {
+  flex-shrink: 0;
+}
+
+.settings__side section + section {
+  padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 
+.settings__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
 .settings h2 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--txiki);
 }
 
 .settings p {
   margin: 0;
-  line-height: 1.5;
-}
-
-.settings section > .link-btn {
-  align-self: flex-start;
+  line-height: 1.45;
 }
 
 .hint {
   color: var(--ink-soft);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
-/* Liste des playlists : compacte, dans une zone qui défile seule, pour ne pas allonger toute la page */
-.playlist-current {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px;
-  border-radius: var(--radius-sm);
+.playlist-chosen {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 2px 12px;
+  border-radius: var(--drop);
   background: var(--jaune-soft);
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.playlist-current .cover {
-  width: 56px;
-  flex: none;
-  border-radius: 10px;
-}
-
-.playlist-current small {
-  display: block;
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 0.85rem;
-  color: var(--ink-soft);
+  font-size: 0.95rem;
 }
 
 .playlist-search {
   font: inherit;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-radius: 999px;
   border: 2px solid var(--line);
   background: var(--paper);
   color: var(--ink);
 }
 
+/* La liste prend toute la hauteur restante et défile seule */
 .playlist-list {
+  flex: 1;
+  min-height: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-auto-rows: min-content;
+  align-content: start;
   gap: 6px;
-  max-height: min(360px, 50vh);
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 6px;
@@ -903,7 +929,7 @@ h2 {
   align-items: center;
   gap: 10px;
   min-width: 0;
-  padding: 6px 10px 6px 6px;
+  padding: 5px 10px 5px 5px;
   border-radius: 12px;
   border: 2px solid transparent;
   background: var(--paper);
@@ -913,7 +939,7 @@ h2 {
 }
 
 .playlist .cover {
-  width: 44px;
+  width: 40px;
   flex: none;
   border-radius: 8px;
 }
@@ -927,19 +953,21 @@ h2 {
 
 .playlist--selected {
   border-color: var(--txiki);
+  background: var(--jaune-soft);
 }
 
 .device-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .device {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
+  min-height: 44px;
+  padding: 8px 12px;
   border-radius: var(--radius-sm);
   background: var(--mist);
   border: 2px solid transparent;
@@ -952,6 +980,7 @@ h2 {
 }
 
 .device input {
+  flex: none;
   accent-color: var(--txiki);
   width: 20px;
   height: 20px;
@@ -966,20 +995,103 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .pin-form input {
-  width: 120px;
+  width: 110px;
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   letter-spacing: 0.4em;
   text-align: center;
-  padding: 10px;
+  padding: 8px;
   border-radius: var(--radius-sm);
   border: 2px solid var(--line);
   background: var(--paper);
   color: var(--ink);
+}
+
+.pin-form .primary-btn {
+  padding: 10px 20px;
+}
+
+/* Écran étroit (téléphone, tablette en portrait) : une colonne, la liste des playlists prend la place
+   restante, les réglages compacts en dessous */
+@media (max-width: 760px) {
+  .overlay {
+    padding: 8px;
+  }
+
+  .settings {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .settings__header h1 {
+    flex: 1;
+    font-size: 1.4rem;
+  }
+
+  .settings__header .primary-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
+  }
+
+  .settings__account {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .settings__body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .settings__side {
+    overflow: visible;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    gap: 12px;
+  }
+
+  .settings__side section + section {
+    padding-top: 12px;
+  }
+
+  .settings__side .hint {
+    display: none;
+  }
+}
+
+/* Écran bas (téléphone en paysage) */
+@media (max-height: 520px) {
+  .overlay {
+    padding: 6px;
+  }
+
+  .settings {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .settings__header h1 {
+    font-size: 1.3rem;
+  }
+
+  .settings__header .bunny {
+    width: 28px;
+    height: 28px;
+  }
+
+  .settings__header .primary-btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+  }
+
+  .settings__side .hint {
+    display: none;
+  }
 }
 
 /* Petits écrans (téléphone en paysage, tablette courte) : repris de la mise en page de prod */
