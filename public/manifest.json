@@ -9,6 +9,6 @@
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",
-  "theme_color": "#1b1240",
-  "background_color": "#1b1240"
+  "theme_color": "#6a5c92",
+  "background_color": "#f0f2f9"
 }

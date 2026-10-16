@@ -5,7 +5,7 @@ import { logout } from "../spotify/auth";
 import { BROWSER_TARGET } from "../spotify/usePlayback";
 import type { Settings } from "../settings";
 import { Cover } from "./Cover";
-import { Logo } from "./Logo";
+import { Bunny } from "./Logo";
 
 type Props = {
   settings: Settings;
@@ -38,7 +38,7 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
       <div className="settings">
         <header className="settings__header">
           <h1>
-            <Logo size={40} />
+            <Bunny size={40} />
             Espace parent
           </h1>
           {onClose && (
