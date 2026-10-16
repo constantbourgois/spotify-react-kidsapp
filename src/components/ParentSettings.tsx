@@ -31,7 +31,7 @@ export function ParentSettings({ settings, onChange, onClose }: Props) {
   }, []);
   useEffect(refreshDevices, [refreshDevices]);
 
-  const otherDevices = devices?.filter((d) => d.name !== "Ma musique") ?? [];
+  const otherDevices = devices?.filter((d) => d.name !== "txikimusik" && d.name !== "Ma musique") ?? [];
 
   return (
     <div className="overlay overlay--scroll">

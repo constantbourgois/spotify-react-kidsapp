@@ -56,7 +56,7 @@ export function usePlayback(target: string) {
       .then(() => {
         if (cancelled) return;
         player = new window.Spotify.Player({
-          name: "Ma musique",
+          name: "txikimusik",
           volume: 0.8,
           getOAuthToken: (cb) => {
             getAccessToken().then(cb, () => {});

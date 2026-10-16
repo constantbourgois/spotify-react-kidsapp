@@ -1,4 +1,4 @@
-# Ma musique
+# txikimusik
 
 Une appli Spotify pour enfant : un parent se connecte une fois et choisit une playlist ; l'enfant
 parcourt les chansons en grille (6 par écran), touche celles qu'il veut, puis appuie sur **Écouter**
@@ -15,7 +15,7 @@ pour ouvrir le lecteur.
 - Un compte **Spotify Premium** (obligatoire pour piloter la lecture via l'API).
 - Une app sur <https://developer.spotify.com/dashboard> :
   - API : *Web API* et *Web Playback SDK*
-  - Redirect URIs : `http://127.0.0.1:5173/` (dev) et l'URL de production, ex. `https://mon-app.herokuapp.com/`
+  - Redirect URIs : `http://127.0.0.1:5173/` (dev) et l'URL de production `https://txikimusik.vercel.app/`
   - En mode développement, ajoutez le compte du parent dans *User Management*.
 
 ## Lancer en local
@@ -29,8 +29,11 @@ npm test
 
 ## Production
 
-`npm run build` puis `npm start` sert `dist/` avec Express (compatible Heroku). Définir
-`VITE_SPOTIFY_CLIENT_ID` dans l'environnement **avant** le build : la valeur est intégrée au bundle.
+En ligne sur <https://txikimusik.vercel.app/> (projet Vercel `txikimusik`). Variables à définir dans Vercel
+**avant** le build, car elles sont intégrées au bundle : `VITE_SPOTIFY_CLIENT_ID` et `VITE_REDIRECT_URI`
+(`https://txikimusik.vercel.app/`, à déclarer aussi dans les Redirect URIs de l'app Spotify).
+
+Ailleurs, `npm run build` puis `npm start` sert `dist/` avec Express.
 
 Sur tablette, « Ajouter à l'écran d'accueil » ouvre l'appli en plein écran.
 

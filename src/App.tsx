@@ -39,8 +39,10 @@ export function App() {
     return (
       <div className="login">
         <Mascots />
-        <Logo height={120} />
-        <h1>Ma musique</h1>
+        <h1 className="brand">
+          <Logo height={120} />
+          <span>musik</span>
+        </h1>
         <p>
           Espace parent : connecte ton compte Spotify une seule fois.
           <br />
