@@ -15,7 +15,7 @@ pour ouvrir le lecteur.
 - Un compte **Spotify Premium** (obligatoire pour piloter la lecture via l'API).
 - Une app sur <https://developer.spotify.com/dashboard> :
   - API : *Web API* et *Web Playback SDK*
-  - Redirect URIs : `http://127.0.0.1:5173/` (dev) et l'URL de production `https://txikimusik.vercel.app/`
+  - Redirect URIs : `http://127.0.0.1:5173/` (dev) et l'URL de production `https://txikimusik.vercel.app`
   - En mode développement, ajoutez le compte du parent dans *User Management*.
 
 ## Lancer en local
@@ -31,7 +31,7 @@ npm test
 
 En ligne sur <https://txikimusik.vercel.app/> (projet Vercel `txikimusik`). Variables à définir dans Vercel
 **avant** le build, car elles sont intégrées au bundle : `VITE_SPOTIFY_CLIENT_ID` et `VITE_REDIRECT_URI`
-(`https://txikimusik.vercel.app/`, à déclarer aussi dans les Redirect URIs de l'app Spotify).
+(`https://txikimusik.vercel.app`, sans `/` final, exactement comme dans les Redirect URIs de l'app Spotify).
 
 Ailleurs, `npm run build` puis `npm start` sert `dist/` avec Express.
 
